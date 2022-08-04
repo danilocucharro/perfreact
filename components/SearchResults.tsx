@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { ProductItem } from "./ProductItem";
 
 interface SearchResultsProps {
@@ -8,9 +9,19 @@ interface SearchResultsProps {
     }>
 }
 
+//
+
 export function SearchResults({ results }: SearchResultsProps) {
+    const totalPrice = useMemo(() => {
+        return results.reduce((total, product) => {
+            return total + product.price;
+        }, 0)
+    }, [results])
+
     return(
         <div>
+            <h2>Preço total = R$ {totalPrice}</h2>
+
             {results.map(product => {
                 return(
                     <ProductItem product={product} />
@@ -36,4 +47,14 @@ export function SearchResults({ results }: SearchResultsProps) {
  * 2. Renders too often
  * 3. Re-renders with same props
  * 4. Medium to big size (quantidade de dados dentro de um component só)
+ */
+
+/**
+ * useMemo
+ * 
+ * 1. Cálculos pesados
+ * 2. Igualdade referencial (quando a gente repassa aqual informação a um componente filho)
+ * 
+ * 
+ * useCallback
  */
