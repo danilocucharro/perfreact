@@ -7,11 +7,12 @@ interface SearchResultsProps {
         price: number;
         title: string;
     }>
+    onAddToWishList: (id: number) => void;
 }
 
 //
 
-export function SearchResults({ results }: SearchResultsProps) {
+export function SearchResults({ results, onAddToWishList }: SearchResultsProps) {
     const totalPrice = useMemo(() => {
         return results.reduce((total, product) => {
             return total + product.price;
@@ -24,7 +25,12 @@ export function SearchResults({ results }: SearchResultsProps) {
 
             {results.map(product => {
                 return(
-                    <ProductItem product={product} />
+                    // eslint-disable-next-line react/jsx-key
+                    <ProductItem 
+                      key={product.id}
+                      product={product}
+                      onAddToWishList={onAddToWishList}
+                    />
                 );
             })}
         </div>
@@ -57,4 +63,6 @@ export function SearchResults({ results }: SearchResultsProps) {
  * 
  * 
  * useCallback
+ * 
+ * 1. Armazenar funções
  */
